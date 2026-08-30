@@ -1,0 +1,14 @@
+{
+  "name": "CrossFlow — Cross-Device Sync",
+  "short_name": "CrossFlow",
+  "description": "Serverless P2P clipboard sync, notification forwarding, file transfer and screen mirroring across your devices.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#090D16",
+  "theme_color": "#090D16",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

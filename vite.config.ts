@@ -1,17 +1,40 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
+import path from 'path'
 
 // https://vitejs.dev/config/
-// PWA support (manifest.json + service worker) is hand-rolled in /public
-// rather than via a plugin, so it's predictable with zero extra config —
-// see public/manifest.json and public/sw.js, registered in src/main.tsx.
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    // Required so getDisplayMedia / Clipboard API work when testing across
-    // two devices on the same LAN — those APIs need a "secure context".
-    // Run `npm run dev -- --host` and open the printed HTTPS/LAN address,
-    // or use a tool like mkcert for a trusted local cert.
-    host: true,
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['icon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+      manifest: {
+        name: 'CrossFlow',
+        short_name: 'CrossFlow',
+        description: 'Ultra-fast, serverless P2P cross-device sync dashboard',
+        theme_color: '#090D16',
+        background_color: '#090D16',
+        display: 'standalone',
+        icons: [
+          {
+            src: 'icon.svg',
+            sizes: '192x192 512x512',
+            type: 'image/svg+xml',
+            purpose: 'any maskable'
+          }
+        ]
+      }
+    })
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
   },
-});
+  build: {
+    outDir: 'dist',
+    sourcemap: false
+  }
+})
